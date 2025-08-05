@@ -5,7 +5,6 @@ from .tts import TTSAdapter
 import pyaudio
 import webrtcvad
 from webrtc_noise_gain import AudioProcessor
-import time
 
 
 def listen_and_process(
@@ -41,27 +40,15 @@ def listen_and_process(
                 silence += 1
             buffer += raw
             if silence >= max_silence and buffer:
-                t0 = time.perf_counter()
                 trimmed = trim_silence_pcm(buffer, sr, aggressiveness, frame_ms, silence_threshold_ms)
                 cleaned = reduce_noise_pcm(trimmed, sr, ns_level, agc_dbfs)
-                t1 = time.perf_counter()
-                audio_duration_s = len(cleaned) / (sr * 2)
-                print(f"[Stats] Audio duration: {audio_duration_s:.2f} s")
-                audio_proc_ms = (t1 - t0) * 1000
-                print(f"[Timing] Audio processing took {audio_proc_ms:.1f} ms")
+                
                 stt.buffer = b"" 
                 text = []
                 if stt.accept_audio(cleaned):
-                    t2 = time.perf_counter()
                     text.append(stt.transcribe_full(cleaned))
-                    t3 = time.perf_counter()
-                    stt_ms = (t3 - t2) * 1000
-                    print(f"[Timing] STT took {stt_ms:.1f} ms")
-                    rtf = stt_ms / (audio_duration_s * 1000)
-                    print(f"[Stats]  Real-time factor (STT_time / audio_duration): {rtf:.2f}×")
                 full_text = " ".join(text).strip()
                 if full_text != "":
-                    # text = stt.transcribe_full(cleaned)
                     print(f"🗣️ {full_text}")
                     reply = agent.chat(full_text)
                     print(f"🤖 {reply}")
