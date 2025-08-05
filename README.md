@@ -21,7 +21,7 @@ A comprehensive **start** for building real-time, low-latency Voice AI agents in
 ## 📦 Installation
 
 ```bash
-git clone https://github.com/your-username/VoiceAgent-Quick-Start.git
+git clone https://github.com/DhavalTalaviya/VoiceAgent-Quick-Start.git
 cd VoiceAgentQuickStart
 pip install -e .
 ```
