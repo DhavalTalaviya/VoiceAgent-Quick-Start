@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "voiceagentquickstart"
+version = "0.1.0"
+description = "voice AI"
+authors = [ { name="Your Name", email="you@example.com" } ]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+  "pyaudio",
+  "webrtcvad",
+  "numpy",
+  "soundfile",
+  "resampy",
+  "librosa",
+  "webrtc-noise-gain",
+  "torch",
+  "transformers",
+  "TTS",
+  "sounddevice",
+  "openai",
+]
+
+[tool.setuptools]
+packages = ["src"]
+
+[project.scripts]
+voiceagent-quickstart = "src.main:main"

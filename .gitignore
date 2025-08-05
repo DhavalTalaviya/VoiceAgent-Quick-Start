@@ -1,0 +1,19 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+.env
+
+build/
+lib/
+dist/
+*.egg-info/
+
+# Editor directories and files
+.vscode/
+
+# OS files
+.DS_Store
+
+# Logs
+*.log
